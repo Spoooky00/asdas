@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Log - School Clinic</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Boxicons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+
+    <style>
+        :root {
+            --header-height: 3rem;
+            --nav-width: 68px;
+            --first-color: #052659; /* Updated color */
+            --first-color-light: #AFA5D9;
+            --white-color: #F7F6FB;
+            --body-font: 'Nunito', sans-serif;
+            --normal-font-size: 1rem;
+            --z-fixed: 100;
+        }
+
+        *,
+        ::before,
+        ::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            position: relative;
+            margin: var(--header-height) 0 0 0;
+            padding: 0 1rem;
+            font-family: var(--body-font);
+            font-size: var(--normal-font-size);
+            transition: .5s;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .header {
+            width: 100%;
+            height: var(--header-height);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            /* Updated */
+            align-items: center;
+            padding: 0 1rem;
+            background-color: var(--white-color);
+            z-index: var(--z-fixed);
+            transition: .5s;
+        }
+
+        .header h3 {
+            margin: 0;
+            /* Remove default margin */
+            text-align: center;
+            /* Center the text */
+            flex-grow: 1;
+            /* Allow the text to grow and center */
+        }
+
+        .header_toggle {
+            color: var(--first-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            /* Added */
+        }
+
+        .l-navbar {
+            position: fixed;
+            top: 0;
+            right: -30%;
+            /* Updated */
+            width: var(--nav-width);
+            height: 100vh;
+            background-color: var(--first-color);
+            /* Updated color */
+            padding: .5rem 1rem 0 0;
+            transition: .5s;
+            z-index: var(--z-fixed);
+        }
+
+        .nav {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .nav_logo,
+        .nav_link {
+            display: grid;
+            grid-template-columns: max-content max-content;
+            align-items: center;
+            column-gap: 1rem;
+            padding: .5rem 0 .5rem 1.5rem;
+        }
+
+        .nav_logo {
+            margin-bottom: 2rem;
+        }
+
+        .nav_logo-icon {
+            font-size: 1.25rem;
+            color: var(--white-color);
+        }
+
+        .nav_logo-name {
+            color: var(--white-color);
+            font-weight: 700;
+        }
+
+        .nav_link {
+            position: relative;
+            color: var(--white-color);
+            /* Updated color */
+            margin-bottom: 1.5rem;
+            white-space: nowrap;
+            /* Ensure text doesn't wrap */
+            padding-left: 20px;
+            /* Adjusted padding */
+            font-size: 14px;
+            /* Adjusted font size */
+            cursor: pointer;
+            /* Added cursor pointer */
+        }
+
+        .nav_link:hover {
+            color: var(--white-color);
+            background-color: var(--first-color-light);
+        }
+
+        .nav_icon {
+            font-size: 1.25rem;
+        }
+
+        .show {
+            right: 0;
+            /* Updated */
+        }
+
+        .body-pd {
+            padding-left: calc(var(--nav-width) + 1rem);
+        }
+
+        .active {
+            color: var(--first-color-light);
+            /* Updated color */
+        }
+
+        .active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 2px;
+            height: 32px;
+            background-color: var(--first-color-light);
+            /* Updated color */
+        }
+
+        .height-100 {
+            height: 100vh;
+        }
+
+        @media screen and (min-width: 768px) {
+            body {
+                margin: calc(var(--header-height) + 1rem) 0 0 0;
+                padding-left: calc(var(--nav-width) + 2rem);
+            }
+
+            .header {
+                height: calc(var(--header-height) + 1rem);
+                padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
+            }
+
+            .l-navbar {
+                left: 0;
+                padding: 1rem 1rem 0 0;
+            }
+
+            .show {
+                width: calc(var(--nav-width) + 156px);
+            }
+
+            .body-pd {
+                padding-left: calc(var(--nav-width) + 188px);
+            }
+        }
+
+        /* Center the modal dialog */
+        .modal-dialog {
+            position: fixed;
+            top: 0%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            width: 80%; /* Adjust the width as needed */
+        }
+
+        /* Center the modal vertically and horizontally */
+        .modal.fade.show {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Add shadow overlay for background contents */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1); /* Adjust opacity as needed */
+        }
+
+        .modal-body {
+            margin-bottom: 20px; /* Add margin below form fields */
+        }
+    </style>
+</head>
+<body id="body-pd">
+<header class="header" id="header">
+    <div class="header_toggle">
+        <i class='bx bx-menu' id="header-toggle"></i>
+    </div>
+    <h3 class="text-center">Inventory  - School Clinic</h3>
+</header>
+<div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+        <div>
+            <a href="#" class="nav_logo">
+                <i class='bx bx-layer nav_logo-icon'></i>
+                <span class="nav_logo-name">DataVault</span>
+            </a>
+            <div class="nav_list">
+                <a href="clinic_admin.html" class="nav_link">
+                    <i class='bx bx-grid-alt nav_icon'></i>
+                    <span class="nav_name">Dashboard</span>
+                </a>
+                <a href="events_appointments.html" class="nav_link">
+                    <i class='bx bx-calendar nav_icon'></i>
+                    <span class="nav_name">Events &amp; Appointments</span>
+                </a>
+                <a href="account_management.html" class="nav_link">
+                    <i class='bx bx-user nav_icon'></i>
+                    <span class="nav_name">Account Management</span>
+                </a>
+                <a href="pmr.html" class="nav_link">
+                    <i class='bx bx-book-reader nav_icon'></i>
+                    <span class="nav_name">Patient Masters Record</span>
+                </a>
+                <a href="daily_logs.html" class="nav_link active">
+                    <i class='bx bx-book nav_icon'></i>
+                    <span class="nav_name">Daily Logs</span>
+                </a>
+                <a href="reports.html" class="nav_link">
+                    <i class='bx bx-bar-chart-alt-2 nav_icon'></i>
+                    <span class="nav_name">Reports</span>
+                </a>
+                <a href="inventory.html" class="nav_link">
+                    <i class='bx bx-archive nav_icon'></i>
+                    <span class="nav_name">Inventory</span>
+                </a>
+            </div>
+        </div>
+        <a href="#" class="nav_link">
+            <i class='bx bx-log-out nav_icon'></i>
+            <span class="nav_name">Sign Out</span>
+        </a>
+    </nav>
+</div>
+
+<div class="container-fluid height-100 bg-light">
+    <div class="d-flex justify-content-between align-items-center">
+        <h4>Inventory</h4>
+        <div id="addLogBtn" class="btn btn-warning"><a href="/inventory">Back</a> </div>
+    </div>
+    <div class="modal fade" id="addLogModal" tabindex="-1" aria-labelledby="addLogModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addLogModalLabel">Add Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addLogForm">
+                        <div class="mb-3">
+                            <label for="itemname" class="form-label">Item Name</label>
+                            <input type="text" class="form-control" id="itemname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="text" class="form-control" id="quantity" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="manufacturer" class="form-label">Manufacturer</label>
+                            <input type="text" class="form-control" id="manufacturer" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="description" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="itemcode" class="form-label">Item Code</label>
+                            <input type="text" class="form-control" id="itemcode" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="itemexpiry" class="form-label">Item Expiry</label>
+                            <input type="text" class="form-control" id="itemexpiry" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="itemtype" class="form-label">Item Type </label>
+                            <input type="text" class="form-control" id="itemtype" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Log</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editLogModal" tabindex="-1" aria-labelledby="editLogModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLogModalLabel">Edit Log</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editLogForm">
+                        <!-- Form fields for editing logs go here -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table responsive" id="logTable">
+            <thead>
+            <tr>
+                <th scope="col">Item name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Manufacturer</th>
+                <th scope="col">Description</th>
+                <th scope="col">Item Code</th>
+                <th scope="col">Item Expiry</th>
+                <th scope="col">Item Type</th>
+
+            </tr>
+            </thead>
+            <form method="POST" action="">
+            <tbody id="logTableBody">
+            <!-- Logs will be dynamically added here -->
+            {% for inventory in data %}
+            <tr>
+
+                <td><input type="text" value="{{inventory.Item_name}}" name="Item_name"></td>
+                <td><input type="text" value="{{inventory.Quantity}}" name="Quantity"></td>
+                <td><input type="text" value="{{inventory.Manufacturer}}" name="Manufacturer"></td>
+                <td><input type="text" value="{{inventory.Description}}" name="Description"></td>
+                <td><input type="text" value="{{inventory.Item_code}}" name="Item_code"></td>
+               <td><input type="text" value="{{inventory.Item_expiry}}" name="Item_expiry"></td>
+                <td><input type="text" value="{{inventory.Item_type}}" name="Item_type"></td>
+
+                <td>
+                <input type="submit" value="Save" class="btn btn-success">  </input>
+                </td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
+
+</body>
+</html>

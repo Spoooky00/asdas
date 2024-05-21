@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Data Report</title>
+    <style>
+        /* Add your CSS styles here */
+        /* Reset some default styles */
+        body, html {
+            background: #C1E8FF;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif; /* Added font-family */
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #021024;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        /* Centered Text */
+        .dashboard-text {
+            text-align: center;
+            margin: auto;
+        }
+
+        /* Content Area Styles */
+        .content {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center the containers */
+        }
+
+        .dynamic-content {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px; /* Add margin for separation */
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .user-table th, .user-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .user-table th {
+            background-color: #f2f2f2;
+        }
+
+        .user-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .user-table tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <div class="hamburger" onclick="toggleNav()">&#9776;</div>
+    <h1 class="dashboard-text">Clinical Data Report</h1>
+</header>
+
+<!-- Content Area -->
+<div class="content">
+    <!-- Patient Information Section -->
+    <div class="dynamic-content">
+        <h2>Patient Information</h2>
+        <table class="user-table">
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td>John Doe</td>
+                </tr>
+                <tr>
+                    <th>Age</th>
+                    <td>45</td>
+                </tr>
+                <tr>
+                    <th>Gender</th>
+                    <td>Male</td>
+                </tr>
+                <!-- Add more patient information as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Medical History Section -->
+    <div class="dynamic-content">
+        <h2>Medical History</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec nisi vitae nulla iaculis suscipit.</p>
+        <!-- Add more medical history details -->
+    </div>
+
+    <!-- Lab Results Section -->
+    <div class="dynamic-content">
+        <h2>Lab Results</h2>
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Test</th>
+                    <th>Result</th>
+                    <!-- Add more table headings as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Blood Pressure</td>
+                    <td>120/80 mmHg</td>
+                    <!-- Add more table data rows as needed -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- JavaScript to toggle side navigation -->
+<script>
+    function toggleNav() {
+        var sidenav = document.getElementById("mySidenav");
+        if (sidenav.style.width === "250px") {
+            sidenav.style.width = "0";
+        } else {
+            sidenav.style.width = "250px";
+        }
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
+
+</body>
+</html>

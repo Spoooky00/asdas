@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events - School Clinic Dashboard</title>
+  <!-- Add Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    /* Reset some default styles */
+    body, html {
+      background: #C1E8FF;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: Arial, sans-serif; /* Added font-family */
+    }
+
+    /* Header Styles */
+    header {
+      background-color: #021024;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hamburger {
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    /* Side Navigation Styles */
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #052659;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add box shadow */
+    }
+
+    .sidenav a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+      background-color: #ffffff29;
+      color: #fff;
+    }
+
+    .sidenav .closebtn {
+      position: absolute;
+      top: 10px; /* Adjust position */
+      right: 10px; /* Adjust position */
+      font-size: 24px;
+    }
+
+    /* Centered Text */
+    .dashboard-text {
+      text-align: center;
+      margin: auto;
+    }
+
+    /* User Info Styles */
+    .user-info {
+      margin-bottom: 20px;
+      text-align: center;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 0; /* Add padding */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Add border bottom */
+    }
+
+    .user-info p {
+      margin-bottom: 5px;
+      margin-left: 10px; /* Adjust margin */
+      font-size: 20px; /* Adjust font size */
+      text-align: left; /* Align text left */
+    }
+
+    .user-info img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      margin-right: 10px; /* Adjust margin */
+    }
+
+    /* Content Area Styles */
+    .content {
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Center the containers */
+    }
+
+    .dynamic-content {
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 20px; /* Add margin for separation */
+    }
+
+    .dynamic-content h2 {
+      text-align: center;
+    }
+
+    .google-calendar {
+      width: 100%;
+      max-width: 800px;
+      height: 600px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="hamburger" onclick="toggleNav()">&#9776;</div>
+  <h1 class="dashboard-text">School Clinic Events</h1>
+</header>
+
+<!-- Side Navigation -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <div class="user-info">
+    <img id="userImage" src="logo.png" alt="Clinic Staff Icon">
+    <div>
+      <p id="welcomeMsg" style="font-size: 20px;">WELCOME TO DataVault!</p>
+    </div>
+  </div>
+  <a href="clinic_admin.html">Dashboard</a>
+  <a href="events.html">Events & Appointments</a>
+  <a href="account_management.html">Account Management</a>
+  <a href="patient_masters_record.html">Patient Masters Records</a>
+  <a href="daily_logs.html">Daily Logs</a>
+  <a href="#">Reports</a>
+  <a href="inventory.html">Inventory</a>
+</div>
+
+<!-- Content Area -->
+<div class="content">
+  <!-- Dynamic Content Section -->
+  <div class="dynamic-content">
+    <h2>Events</h2>
+    <!-- Google Calendar Embed -->
+    <iframe src="https://calendar.google.com/calendar/embed?src=baztycatapang@gmail.com&ctz=America%2FNew_York" class="google-calendar"></iframe>
+    <!-- Replace YOUR_CALENDAR_ID with your actual Google Calendar ID -->
+  </div>
+</div>
+
+<!-- Add Font Awesome JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+<script>
+  function toggleNav() {
+    var sidenav = document.getElementById("mySidenav");
+    if (sidenav.style.width === "250px") {
+      sidenav.style.width = "0";
+    } else {
+      sidenav.style.width = "250px";
+    }
+  }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script>
+
+</body>
+</html>

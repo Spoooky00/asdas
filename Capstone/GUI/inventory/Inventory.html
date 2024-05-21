@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory - School Clinic</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Boxicons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+
+    <style>
+        :root {
+            --header-height: 3rem;
+            --nav-width: 68px;
+            --first-color: #052659; /* Updated color */
+            --first-color-light: #AFA5D9;
+            --white-color: #F7F6FB;
+            --body-font: 'Nunito', sans-serif;
+            --normal-font-size: 1rem;
+            --z-fixed: 100;
+        }
+
+        *,
+        ::before,
+        ::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            position: relative;
+            margin: var(--header-height) 0 0 0;
+            padding: 0 1rem;
+            font-family: var(--body-font);
+            font-size: var(--normal-font-size);
+            transition: .5s;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .header {
+            width: 100%;
+            height: var(--header-height);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            /* Updated */
+            align-items: center;
+            padding: 0 1rem;
+            background-color: var(--white-color);
+            z-index: var(--z-fixed);
+            transition: .5s;
+        }
+
+        .header h3 {
+            margin: 0;
+            /* Remove default margin */
+            text-align: center;
+            /* Center the text */
+            flex-grow: 1;
+            /* Allow the text to grow and center */
+        }
+
+        .header_toggle {
+            color: var(--first-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            /* Added */
+        }
+
+        .l-navbar {
+            position: fixed;
+            top: 0;
+            right: -30%;
+            /* Updated */
+            width: var(--nav-width);
+            height: 100vh;
+            background-color: var(--first-color);
+            /* Updated color */
+            padding: .5rem 1rem 0 0;
+            transition: .5s;
+            z-index: var(--z-fixed);
+        }
+
+        .nav {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .nav_logo,
+        .nav_link {
+            display: grid;
+            grid-template-columns: max-content max-content;
+            align-items: center;
+            column-gap: 1rem;
+            padding: .5rem 0 .5rem 1.5rem;
+        }
+
+        .nav_logo {
+            margin-bottom: 2rem;
+        }
+
+        .nav_logo-icon {
+            font-size: 1.25rem;
+            color: var(--white-color);
+        }
+
+        .nav_logo-name {
+            color: var(--white-color);
+            font-weight: 700;
+        }
+
+        .nav_link {
+            position: relative;
+            color: var(--white-color);
+            /* Updated color */
+            margin-bottom: 1.5rem;
+            white-space: nowrap;
+            /* Ensure text doesn't wrap */
+            padding-left: 20px;
+            /* Adjusted padding */
+            font-size: 14px;
+            /* Adjusted font size */
+            cursor: pointer;
+            /* Added cursor pointer */
+        }
+
+        .nav_link:hover {
+            color: var(--white-color);
+            background-color: var(--first-color-light);
+        }
+
+        .nav_icon {
+            font-size: 1.25rem;
+        }
+
+        .show {
+            right: 0;
+            /* Updated */
+        }
+
+        .body-pd {
+            padding-left: calc(var(--nav-width) + 1rem);
+        }
+
+        .active {
+            color: var(--first-color-light);
+            /* Updated color */
+        }
+
+        .active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 2px;
+            height: 32px;
+            background-color: var(--first-color-light);
+            /* Updated color */
+        }
+
+        .height-100 {
+            height: 100vh;
+        }
+
+        @media screen and (min-width: 768px) {
+            body {
+                margin: calc(var(--header-height) + 1rem) 0 0 0;
+                padding-left: calc(var(--nav-width) + 2rem);
+            }
+
+            .header {
+                height: calc(var(--header-height) + 1rem);
+                padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
+            }
+
+            .l-navbar {
+                left: 0;
+                padding: 1rem 1rem 0 0;
+            }
+
+            .show {
+                width: calc(var(--nav-width) + 156px);
+            }
+
+            .body-pd {
+                padding-left: calc(var(--nav-width) + 188px);
+            }
+        }
+    </style>
+</head>
+<body id="body-pd">
+<header class="header" id="header">
+    <div class="header_toggle">
+        <i class='bx bx-menu' id="header-toggle"></i>
+    </div>
+    <h3 class="text-center">Inventory - School Clinic</h3>
+</header>
+<div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+        <div>
+            <a href="#" class="nav_logo">
+                <i class='bx bx-layer nav_logo-icon'></i>
+                <span class="nav_logo-name">DataVault</span>
+            </a>
+            <div class="nav_list">
+                <a href="/clinic_admin" class="nav_link">
+                    <i class='bx bx-grid-alt nav_icon'></i>
+                    <span class="nav_name">Dashboard</span>
+                </a>
+                <a href="/events" class="nav_link">
+                    <i class='bx bx-calendar nav_icon'></i>
+                    <span class="nav_name">Events & Appointments</span>
+                </a>
+                <a href="/account_management" class="nav_link">
+                    <i class='bx bx-user nav_icon'></i>
+                    <span class="nav_name">Account Management</span>
+                </a>
+                <a href="/pmr" class="nav_link">
+                    <i class='bx bx-book-reader nav_icon'></i>
+                    <span class="nav_name">Patient Masters Record</span>
+                </a>
+                <a href="/daily_logs" class="nav_link ">
+                    <i class='bx bx-book nav_icon'></i>
+                    <span class="nav_name">Daily Logs</span>
+                </a>
+                <a href="reports" class="nav_link">
+                    <i class='bx bx-bar-chart-alt-2 nav_icon'></i>
+                    <span class="nav_name">Reports</span>
+                </a>
+                <a href="/inventory" class="nav_link active">
+                    <i class='bx bx-archive nav_icon'></i>
+                    <span class="nav_name">Inventory</span>
+                </a>
+            </div>
+        </div>
+        <a href="#" class="nav_link">
+            <i class='bx bx-log-out nav_icon'></i>
+            <span class="nav_name">Sign Out</span>
+        </a>
+    </nav>
+</div>
+
+<div class="container-fluid height-100 bg-light">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>Main Components</h4>
+                <a href="{{ url_for('addinventory') }}">
+                <div id="addLogBtn" class="btn btn-primary">Add New Item</div>
+                </a>
+            </div>
+        <hr>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="table-responsive">
+                    <table class="table responsive" id="logTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Manufacturer</th>
+                            <th scope="col">Description</th>
+                            <th scope="col"> Code</th>
+                            <th scope="col"> Expiry</th>
+                            <th scope="col"> Type</th>
+                            <th>Action</th>
+
+                        </tr>
+                        </thead>
+                        <tbody id="logTableBody">
+                        <!-- Logs will be dynamically added here -->
+                        {% for inventory in data %}
+                        <tr>
+                            <td>{{inventory.Item_name}}</td>
+                            <td>{{inventory.Quantity}}</td>
+                            <td>{{inventory.Manufacturer}}</td>
+                            <td>{{inventory.Description}}</td>
+                            <td>{{inventory.Item_code}}</td>
+                            <td>{{inventory.Item_expiry}}</td>
+                            <td>{{inventory.Item_type}}</td>
+                            <td>
+                                <button class="btn btn-primary">
+                                    <a class="text-light" href="/updateinventory/{{ inventory.Item_ID}}">
+                                        Update
+                                    </a>
+                                </button>
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.6.20/fetch.min.js" integrity="sha512-5vzl35V/cPSXliPbZtxHY0Q6cfYFd2Qld79+d7wLPbOxnKeCHH/LmlMD8aYl0ZN5VZPFM2FnKiAjoNJ2k3vrEg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        const showNavbar = (toggleId, navId, bodyId, headerId) => {
+            const toggle = document.getElementById(toggleId),
+                nav = document.getElementById(navId),
+                bodypd = document.getElementById(bodyId),
+                headerpd = document.getElementById(headerId)
+
+            // Validate that all variables exist
+            if (toggle && nav && bodypd && headerpd) {
+                toggle.addEventListener('click', () => {
+                    // show navbar
+                    nav.classList.toggle('show')
+                    // change icon
+                    toggle.classList.toggle('bx-x')
+                    // add padding to body
+                    bodypd.classList.toggle('body-pd')
+                    // add padding to header
+                    headerpd.classList.toggle('body-pd')
+                })
+            }
+        }
+
+        showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
+
+        /*===== LINK ACTIVE =====*/
+        const linkColor = document.querySelectorAll('.nav_link')
+
+        function colorLink() {
+            if (linkColor) {
+                linkColor.forEach(l => l.classList.remove('active'))
+                this.classList.add('active')
+            }
+        }
+
+        linkColor.forEach(l => l.addEventListener('click', colorLink))
+
+        // Your code to run since DOM is loaded and ready
+        const addLogForm = document.getElementById('addLogForm');
+        const logTableBody = document.getElementById('logTableBody');
+        const logTable = $('#logTable').DataTable();
+
+        // Check if there is existing data in local storage
+        const storedLogs = localStorage.getItem('clinicinventory');
+        let logs = storedLogs ? JSON.parse(storedLogs) : [];
+
+        // Function to add log to table and store in local storage
+        const addLog = (itemname, quantity,manufacturer,description,itemcode,itemexpiry,itemtype) => {
+            const newRow = [
+                itemname,
+                quantity,
+                manufacturer,
+                description,
+                itemcode,
+                itemexpiry,
+                itemtype
+                '<button class="btn btn-primary me-2 edit-btn"><i class="bx bx-edit"></i> Edit</button>' +
+                '<button class="btn btn-danger delete-btn"><i class="bx bx-trash"></i> Delete</button>'
+            ];
+            logTable.row.add(newRow).draw();
+            logs.push({ itemname, quantity,manufacturer,description,itemcode,itemexpiry,itemtype });
+            localStorage.setItem('clinicinventory', JSON.stringify(logs));
+        };
+
+
+
+
+            if (itemname && quantity && manufacturer && description && itemcode && itemexpiry &&itemtype) {
+                addLog(itemname, quantity);
+                // Clear inputs
+                itemnameInput.value = '';
+                quantityInput.value = '';
+                manufacturerInput.value = '';
+                descriptionInput.value = '';
+                itemcodeInput.value = '';
+                itemexpiryInput.value = '';
+                itemtypeInput.value = '';
+
+
+
+
+        // Delete log button event listener
+        $('#logTableBody').on('click', '.delete-btn', function() {
+            if (confirm("Are you sure you want to delete this log?")) {
+                const rowData = logTable.row($(this).parents('tr')).data();
+                // Here you can add your code to delete the log
+                // For example, remove the row from the table and update local storage
+                // For demonstration, I'll remove the row from the table only
+                logTable.row($(this).parents('tr')).remove().draw();
+            }
+        });
+    });
+
+    document.getElementById("savebutton").onclick = function () {
+        var name = document.getElementById("itemname").value;
+        var quantity = document.getElementById("quantity").value;
+        var manufacturer = document.getElementById("manufacturer").value;
+        var description = document.getElementById("description").value;
+        var code = document.getElementById("itemcode").value;
+        var expiry = document.getElementById("itemexpiry").value;
+        var type = document.getElementById("itemtype").value;
+
+
+        console.log(item)
+        console.log(quantity)
+        console.log(manufacturer)
+        console.log(description)
+        console.log(code)
+        console.log(expiry)
+        console.log(type)
+
+        let data = {
+            item: item,
+            quantity: quantity,
+            manufacturer: manufacturer,
+            description: description,
+            code: itemcode,
+            expiry: itemexpiry,
+            type: itemtype
+
+        };
+
+        fetch("addinventory", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then(res => {
+            console.log("Request complete! response:", res);
+        });
+        location.reload();
+    };
+</script>
+</body>
+</html>
